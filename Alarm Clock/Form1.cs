@@ -16,5 +16,25 @@ namespace Alarm_Clock
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            timerClock.Start();
+        }
+
+        private void DisplayTime()
+        {
+            label1.Text = DateTime.Now.ToLongTimeString();
+        }
+
+        private void timerClock_Tick(object sender, EventArgs e)
+        {
+            DisplayTime();
+        }
+
+        private void buttonTurnOn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
