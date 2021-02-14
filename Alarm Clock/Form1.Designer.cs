@@ -37,9 +37,11 @@ namespace Alarm_Clock
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.buttonTurnOn = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.MediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MediaPlayer)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -110,12 +112,22 @@ namespace Alarm_Clock
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // MediaPlayer
+            // 
+            this.MediaPlayer.Enabled = true;
+            this.MediaPlayer.Location = new System.Drawing.Point(2, 135);
+            this.MediaPlayer.Name = "MediaPlayer";
+            this.MediaPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("MediaPlayer.OcxState")));
+            this.MediaPlayer.Size = new System.Drawing.Size(273, 49);
+            this.MediaPlayer.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(274, 111);
+            this.ClientSize = new System.Drawing.Size(274, 114);
+            this.Controls.Add(this.MediaPlayer);
             this.Controls.Add(this.buttonTurnOn);
             this.Controls.Add(this.numericUpDown2);
             this.Controls.Add(this.numericUpDown1);
@@ -132,6 +144,7 @@ namespace Alarm_Clock
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MediaPlayer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -145,6 +158,7 @@ namespace Alarm_Clock
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.Button buttonTurnOn;
+        private AxWMPLib.AxWindowsMediaPlayer MediaPlayer;
     }
 }
 
