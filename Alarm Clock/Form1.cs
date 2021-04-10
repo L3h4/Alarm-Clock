@@ -13,7 +13,9 @@ namespace Alarm_Clock
 {
     public partial class Form1 : Form
     {
-        int H, M;
+        int AlarmH, AlarmM;
+        int TimerSecs;
+        bool TimerRuns;
         int h, m, s;
         DateTime current;
         public Form1()
@@ -26,12 +28,36 @@ namespace Alarm_Clock
             timerClock.Start();
         }
 
+        private void bStartTimer_Click(object sender, EventArgs e)
+        {
+            TimerRuns = !TimerRuns;
+            if(TimerRuns)
+            {
+                bStartTimer.Text = "Stop";
+                nUDHours.Visible = false;
+                nUDMinutes.Visible = false;
+                nUDSeconds.Visible = false;
+                lTimerDisp.Visible = true;
+                TimerSecs = (int)(nUDHours.Value * 3600 + nUDMinutes.Value * 60 + nUDSeconds.Value);
+            }
+            else
+            {
+                lTimerDisp.Text = "00:00:00";
+                bStartTimer.Text = "Start";
+                nUDHours.Visible = true;
+                nUDMinutes.Visible = true;
+                nUDSeconds.Visible = true;
+                lTimerDisp.Visible = false;
+            }
+
+        }
+
         private void DisplayTime()
         {
             label1.Text = DateTime.Now.ToLongTimeString();
         }
 
-        private void timerClock_Tick(object sender, EventArgs e)
+        void timerClock_Tick(object sender, EventArgs e)
         {
             DisplayTime();
             current = DateTime.Now;
@@ -39,19 +65,41 @@ namespace Alarm_Clock
             m = current.Minute;
             s = current.Second;
 
-             if (h == H && m == M && s == 0)
+            if (h == AlarmH && m == AlarmM && s == 0)
             {
-                MessageBox.Show("Alarm", "Alarm");
-                string path = Path.GetFullPath(@"..\..\Sounds\Sound_23479.mp3");
-                MediaPlayer.URL = path;
-                MediaPlayer.Ctlcontrols.play();
+            Task.Run(() => { MessageBox.Show("Alarm", "Alarm"); });
+            string path = Path.GetFullPath(@"..\..\Sounds\Sound_23479.mp3");
+            MediaPlayer.URL = path;
+            MediaPlayer.Ctlcontrols.play();
             }
+            if(TimerRuns)
+            {
+                TimerSecs--;
+                DistlayTimeLeft();
+                if(TimerSecs <= 0)
+                {
+                    bStartTimer.PerformClick();
+                    Task.Run(() => { MessageBox.Show("Timer ran out", "Timer"); });
+                    string path = Path.GetFullPath(@"..\..\Sounds\Sound_23479.mp3");
+                    MediaPlayer.URL = path;
+                    MediaPlayer.Ctlcontrols.play();
+                }
+            }
+        }
+
+        private void DistlayTimeLeft()
+        {
+            int h, m, s;
+            h = (int)TimerSecs / 3600;
+            m = (int)((TimerSecs % 3600) / 60);
+            s = (int)((TimerSecs % 3600) % 60);
+            lTimerDisp.Text = $"{h.ToString("D2")}:{m.ToString("D2")}:{s.ToString("D2")}";
         }
 
         private void buttonTurnOn_Click(object sender, EventArgs e)
         {
-            H = (int)numericUpDown1.Value;
-            M = (int)numericUpDown2.Value;
+            AlarmH = (int)numericUpDown1.Value;
+            AlarmM = (int)numericUpDown2.Value;
 
         }
     }
